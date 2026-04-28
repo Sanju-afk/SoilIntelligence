@@ -5,10 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  LayoutDashboard, FlaskConical, FileText, Calendar, MapPin,
+  LayoutDashboard, FlaskConical, FileText, MapPin,
   Settings, Bell, LogOut, Leaf, ChevronRight, Menu, X,
   BarChart3, Shield, MessageSquare, CreditCard, User,
-  TrendingUp, Users, Truck, Wrench, Home
+  Truck, Wrench, Home
 } from "lucide-react";
 
 interface NavItem {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowRight, CheckCircle2, Leaf, BarChart3, Shield,
   MapPin, ChevronDown, Star, Cpu, Zap, Globe,

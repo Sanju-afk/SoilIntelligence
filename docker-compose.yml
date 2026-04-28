@@ -1,0 +1,147 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────
+# Soil Intelligence — Docker Compose (project root version)
+# Run from project root: docker-compose up
+# ─────────────────────────────────────────────────────────────
+
+services:
+
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: si_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: soil_user
+      POSTGRES_PASSWORD: soil_pass
+      POSTGRES_DB: soil_intelligence
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U soil_user -d soil_intelligence"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - si_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: si_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - si_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: si_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://soil_user:soil_pass@postgres:5432/soil_intelligence
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET_KEY: dev-jwt-secret-CHANGE-IN-PRODUCTION-32chars
+      SECRET_KEY: dev-app-secret-CHANGE-IN-PRODUCTION-32chars
+      ENVIRONMENT: development
+      DEBUG: "true"
+      ALLOWED_ORIGINS: '["http://localhost:3000"]'
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - si_reports:/app/reports
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - si_network
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: si_celery
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      DATABASE_URL: postgresql+asyncpg://soil_user:soil_pass@postgres:5432/soil_intelligence
+      REDIS_URL: redis://redis:6379
+      ENVIRONMENT: development
+    volumes:
+      - ./backend:/app
+      - si_reports:/app/reports
+    command: celery -A app.tasks.celery_app worker --loglevel=info
+    networks:
+      - si_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: si_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+    networks:
+      - si_network
+
+  adminer:
+    image: adminer:4
+    container_name: si_adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - si_network
+
+  minio:
+    image: minio/minio:latest
+    container_name: si_minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - si_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+  si_reports:
+
+networks:
+  si_network:
+    driver: bridge

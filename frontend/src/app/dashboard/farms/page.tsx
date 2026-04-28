@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MapPin, Plus, Leaf, FlaskConical, ChevronRight, Edit2, Trash2, Globe } from "lucide-react";
+import { MapPin, Plus, Leaf, FlaskConical, ChevronRight, Edit2 } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const FARMS = [

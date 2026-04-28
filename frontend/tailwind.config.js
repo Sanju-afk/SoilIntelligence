@@ -67,7 +67,7 @@ module.exports = {
       fontFamily: {
         display: ["'Playfair Display'", "Georgia", "serif"],
         sans:    ["'DM Sans'", "system-ui", "sans-serif"],
-        mono:    ["'JetBrains Mono'", "monospace"],
+        mono:    ["'Courier New'", "Courier", "monospace"],
         data:    ["'Space Grotesk'", "sans-serif"],
       },
       fontSize: {
@@ -121,8 +121,8 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/typography"),
-  ],
+  // No plugins here — @tailwindcss/forms and @tailwindcss/typography are NOT installed.
+  // To add them: npm install -D @tailwindcss/forms @tailwindcss/typography
+  // then uncomment: require("@tailwindcss/forms"), require("@tailwindcss/typography")
+  plugins: [],
 };

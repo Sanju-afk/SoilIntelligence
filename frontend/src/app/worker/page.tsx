@@ -6,7 +6,7 @@ import {
   MapPin, Package, CheckCircle2, Clock, ChevronRight,
   Navigation, Camera, AlertTriangle, Phone, ArrowRight,
   Truck, FlaskConical, Upload, Star, Wifi, Battery,
-  CheckCheck, CircleDot, Circle
+  CheckCheck
 } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 

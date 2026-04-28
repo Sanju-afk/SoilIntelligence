@@ -5,9 +5,9 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Users, FlaskConical, TrendingUp, Euro, AlertTriangle,
-  ChevronRight, MoreHorizontal, CheckCircle2, Clock,
+  ChevronRight, MoreHorizontal, CheckCircle2,
   Truck, BarChart3, ArrowUpRight, MapPin, Activity,
-  Package, UserCheck, FileText, Zap, Circle
+  Package, UserCheck, FileText
 } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 

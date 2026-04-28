@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Search, Filter, MoreHorizontal, UserCheck, Mail, Phone, MapPin, ChevronDown } from "lucide-react";
+import { Users, Search, MoreHorizontal, UserCheck, Mail, MapPin } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const USERS = [

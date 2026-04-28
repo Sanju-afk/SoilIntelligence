@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Playfair_Display, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, Playfair_Display, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { Toaster } from "@/components/ui/Toaster";
@@ -9,19 +9,16 @@ const dmSans = DM_Sans({
   variable: "--font-sans",
   display: "swap",
 });
+
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
 });
+
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-data",
-  display: "swap",
-});
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
   display: "swap",
 });
 
@@ -65,11 +62,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${playfair.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans antialiased bg-white text-gray-900">
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${playfair.variable} ${spaceGrotesk.variable}`}
+    >
+      <body className="font-sans antialiased bg-[#040a04] text-white">
         <QueryProvider>
-          {children}
-          <Toaster />
+          <Toaster>
+            {children}
+          </Toaster>
         </QueryProvider>
       </body>
     </html>

@@ -433,7 +433,7 @@ export default function NewOrderPage() {
             {step < STEPS.length - 1 && (
               <button
                 onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
-                disabled={step === 0 && !selectedPackage || step === 1 && !selectedFarm}
+                disabled={(step === 0 && !selectedPackage) || (step === 1 && !selectedFarm)}
                 className="flex items-center gap-2 bg-[#1e6b1a] hover:bg-[#26881f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 rounded-xl transition-all"
               >
                 Continue <ArrowRight className="w-4 h-4" />

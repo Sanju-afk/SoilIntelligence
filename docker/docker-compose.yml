@@ -1,13 +1,14 @@
 version: "3.9"
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────
 # Soil Intelligence — Docker Compose
-# Full local dev stack
-# ─────────────────────────────────────────
+# Run from the PROJECT ROOT: docker-compose -f docker/docker-compose.yml up
+# Or copy this file to project root and run: docker-compose up
+# ─────────────────────────────────────────────────────────────
 
 services:
 
-  # ── PostgreSQL ──────────────────────────
+  # ── PostgreSQL ──────────────────────────────────────────────
   postgres:
     image: postgis/postgis:16-3.4
     container_name: si_postgres
@@ -20,7 +21,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      # Path relative to docker-compose.yml location (docker/ folder → ../database/)
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U soil_user -d soil_intelligence"]
       interval: 10s
@@ -29,7 +31,7 @@ services:
     networks:
       - si_network
 
-  # ── Redis (task queue / token store) ───
+  # ── Redis ───────────────────────────────────────────────────
   redis:
     image: redis:7-alpine
     container_name: si_redis
@@ -47,10 +49,10 @@ services:
     networks:
       - si_network
 
-  # ── FastAPI Backend ─────────────────────
+  # ── FastAPI Backend ─────────────────────────────────────────
   backend:
     build:
-      context: ./backend
+      context: ../backend        # relative to docker/ → resolves to backend/
       dockerfile: Dockerfile
     container_name: si_backend
     restart: unless-stopped
@@ -62,24 +64,24 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://soil_user:soil_pass@postgres:5432/soil_intelligence
       REDIS_URL: redis://redis:6379
-      JWT_SECRET_KEY: dev-jwt-secret-change-in-production
-      SECRET_KEY: dev-secret-change-in-production
+      JWT_SECRET_KEY: dev-jwt-secret-CHANGE-IN-PRODUCTION-32chars
+      SECRET_KEY: dev-app-secret-CHANGE-IN-PRODUCTION-32chars
       ENVIRONMENT: development
       DEBUG: "true"
-      ALLOWED_ORIGINS: '["http://localhost:3000","http://localhost:3001"]'
+      ALLOWED_ORIGINS: '["http://localhost:3000"]'
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
+      - ../backend:/app          # hot reload in dev
       - si_reports:/app/reports
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     networks:
       - si_network
 
-  # ── Celery Worker ───────────────────────
+  # ── Celery Worker ───────────────────────────────────────────
   celery_worker:
     build:
-      context: ./backend
+      context: ../backend
       dockerfile: Dockerfile
     container_name: si_celery
     restart: unless-stopped
@@ -91,16 +93,16 @@ services:
       REDIS_URL: redis://redis:6379
       ENVIRONMENT: development
     volumes:
-      - ./backend:/app
+      - ../backend:/app
       - si_reports:/app/reports
     command: celery -A app.tasks.celery_app worker --loglevel=info -Q default,analysis,reports
     networks:
       - si_network
 
-  # ── Next.js Frontend ────────────────────
+  # ── Next.js Frontend ────────────────────────────────────────
   frontend:
     build:
-      context: ./frontend
+      context: ../frontend       # relative to docker/ → resolves to frontend/
       dockerfile: Dockerfile.dev
     container_name: si_frontend
     restart: unless-stopped
@@ -108,19 +110,17 @@ services:
       - backend
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
-      NEXT_PUBLIC_MAPBOX_TOKEN: ${MAPBOX_TOKEN:-}
-      NEXT_PUBLIC_STRIPE_PK: ${STRIPE_PUBLISHABLE_KEY:-}
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+      - ../frontend:/app         # hot reload
+      - /app/node_modules        # keep node_modules inside container
+      - /app/.next               # keep .next cache inside container
     command: npm run dev
     networks:
       - si_network
 
-  # ── Adminer (DB UI) ─────────────────────
+  # ── Adminer (DB UI) ─────────────────────────────────────────
   adminer:
     image: adminer:4
     container_name: si_adminer
@@ -132,7 +132,7 @@ services:
     networks:
       - si_network
 
-  # ── MinIO (S3-compatible local storage) ─
+  # ── MinIO (local S3-compatible storage) ─────────────────────
   minio:
     image: minio/minio:latest
     container_name: si_minio
@@ -149,14 +149,12 @@ services:
     networks:
       - si_network
 
-# ── Volumes ─────────────────────────────
 volumes:
   postgres_data:
   redis_data:
   minio_data:
   si_reports:
 
-# ── Networks ─────────────────────────────
 networks:
   si_network:
     driver: bridge

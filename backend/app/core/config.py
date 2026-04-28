@@ -46,6 +46,9 @@ class Settings(BaseSettings):
     AWS_SECRET_KEY: str = ""
 
     # ── Payments ──────────────────────────────
+        # Redis
+    REDIS_URL: str = "redis://localhost:6379"
+
     STRIPE_SECRET_KEY: str = ""
     STRIPE_WEBHOOK_SECRET: str = ""
     STRIPE_PUBLISHABLE_KEY: str = ""
