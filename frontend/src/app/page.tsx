@@ -22,7 +22,7 @@ const PRICING_PLANS = [
     vat: true,
     color: "moss",
     sampling_points: 3,
-    turnaround: "48 hours",
+    turnaround: "3 days",
     features: [
       "3-point soil sampling",
       "Full NPK + pH + EC analysis",
@@ -38,11 +38,11 @@ const PRICING_PLANS = [
     id: "standard",
     name: "Standard",
     subtitle: "5 Hectares",
-    price: 120,
+    price: 100,
     vat: true,
     color: "amber",
     sampling_points: 7,
-    turnaround: "48 hours",
+    turnaround: "3 days",
     features: [
       "7-point soil sampling",
       "Full NPK + pH + EC + moisture analysis",
@@ -64,7 +64,7 @@ const PRICING_PLANS = [
     vat: true,
     color: "sky",
     sampling_points: 12,
-    turnaround: "48 hours",
+    turnaround: "3 days",
     features: [
       "12-point soil sampling",
       "Full 7-parameter sensor analysis",
@@ -114,7 +114,7 @@ const HOW_IT_WORKS = [
     step: "05",
     title: "Report Delivered",
     description:
-      "A professional PDF report with your soil health score, fertiliser recommendations, and EU compliance documentation arrives in your inbox within 48 hours.",
+      "A professional PDF report with your soil health score, fertiliser recommendations, and EU compliance documentation arrives in your inbox within 3 days.",
     icon: "📊",
   },
 ];
@@ -181,7 +181,7 @@ const FAQS = [
 
 const STATS = [
   { value: "15–20%", label: "Average fertiliser cost reduction", icon: TrendingDown },
-  { value: "48 hrs", label: "Report delivery guarantee", icon: Zap },
+  { value: "3 days", label: "Report delivery guarantee", icon: Zap },
   { value: "91%", label: "LoRaWAN agricultural coverage", icon: Globe },
   { value: "±4%", label: "Sensor accuracy vs lab testing", icon: FlaskConical },
 ];
@@ -307,7 +307,7 @@ function HeroSection() {
             <br />
             Delivered in{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#edbf46] to-[#f4a020]">
-              48 Hours.
+              3 Days.
             </span>
           </motion.h1>
 
@@ -319,7 +319,7 @@ function HeroSection() {
           >
             Professional-grade soil diagnostics — NPK, pH, EC, moisture, temperature — without
             owning a single sensor. Order a package, we handle everything. You receive an
-            AI-powered report and EU compliance documentation within 48 hours.
+            AI-powered report and EU compliance documentation within 3 days.
           </motion.p>
 
           {/* Trust signals */}
@@ -332,7 +332,7 @@ function HeroSection() {
             {[
               "No equipment to buy",
               "EU Compliance Included",
-              "Results in 48 hours",
+              "Results in 3 days",
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm text-white/60">
                 <CheckCircle2 className="w-4 h-4 text-[#6fab69]" />
@@ -812,12 +812,12 @@ function CTASection() {
             Your soil data.
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6fab69] to-[#3db87d]">
-              Ready in 48 hours.
+              Ready in 3 days.
             </span>
           </h2>
           <p className="text-white/60 text-lg mb-10 leading-relaxed">
             Join 200+ Lithuanian farmers who've optimised their fertiliser spend and achieved EU
-            compliance without purchasing a single sensor. Order now, results in 2 days.
+            compliance without purchasing a single sensor. Order now, results in 3 days.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center">
