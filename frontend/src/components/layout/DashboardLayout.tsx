@@ -8,7 +8,7 @@ import {
   LayoutDashboard, FlaskConical, FileText, MapPin,
   Settings, Bell, LogOut, Leaf, ChevronRight, Menu, X,
   BarChart3, Shield, MessageSquare, CreditCard, User,
-  Truck, Wrench, Home
+  Truck, Wrench, Home, TrendingUp,
 } from "lucide-react";
 
 interface NavItem {
@@ -33,7 +33,7 @@ const FARMER_NAV: NavItem[] = [
 
 const ADMIN_NAV: NavItem[] = [
   { label: "Dashboard",       href: "/admin",                       icon: LayoutDashboard },
-  { label: "Users",           href: "/admin/users",                 icon: Users },
+  { label: "Users",           href: "/admin/users",                 icon: User },
   { label: "Orders",          href: "/admin/orders",                icon: FlaskConical },
   { label: "Workers",         href: "/admin/workers",               icon: Truck },
   { label: "Reports",         href: "/admin/reports",               icon: FileText },
