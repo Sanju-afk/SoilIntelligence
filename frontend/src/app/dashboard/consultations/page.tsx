@@ -7,8 +7,8 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const CONSULTATIONS = [
   { id: "con-1", type: "video", agronomist: "Dr. Rimas Paulauskas", date: "2025-06-20", time: "14:00", duration: 30, status: "scheduled", topic: "Phosphorus correction strategy for North Field", meeting_url: "https://meet.google.com/abc-defg-hij" },
-  { id: "con-2", type: "phone", agronomist: "Jolita Vaičiūtė",     date: "2025-05-28", time: "10:00", duration: 30, status: "completed",  topic: "Spring barley rotation planning", rating: 5 },
-  { id: "con-3", type: "video", agronomist: "Dr. Rimas Paulauskas", date: "2025-04-15", time: "15:30", duration: 60, status: "completed",  topic: "Full farm agronomic review", rating: 5 },
+  { id: "con-2", type: "phone", agronomist: "Jolita Vaičiūtė",     date: "2025-05-28", time: "10:00", duration: 30, status: "completed",  topic: "Spring barley rotation planning" },
+  { id: "con-3", type: "video", agronomist: "Dr. Rimas Paulauskas", date: "2025-04-15", time: "15:30", duration: 60, status: "completed",  topic: "Full farm agronomic consultation" },
 ];
 
 const TYPE_CFG = { video: { icon: Video, color: "text-[#5aadd4]", bg: "bg-[#2a88b8]/15" }, phone: { icon: Phone, color: "text-[#6fab69]", bg: "bg-[#1e6b1a]/15" }, email: { icon: Mail, color: "text-purple-400", bg: "bg-purple-500/10" } };
@@ -40,7 +40,6 @@ export default function ConsultationsPage() {
           {[
             { label: "Consultations Remaining", value: "2", sub: "From Standard & Professional packages", color: "text-[#6fab69]" },
             { label: "Total Sessions Completed", value: "3", sub: "All time", color: "text-white" },
-            { label: "Avg. Rating", value: "5.0 ★", sub: "Based on 2 reviews", color: "text-[#edbf46]" },
           ].map((s) => (
             <div key={s.label} className="bg-[#0d1a0c]/80 border border-[#1a2e18] rounded-2xl p-4">
               <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
@@ -76,12 +75,6 @@ export default function ConsultationsPage() {
                     <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {con.date}</span>
                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {con.time}</span>
                   </div>
-                  {con.rating && (
-                    <div className="flex items-center gap-1 mt-2">
-                      {Array.from({ length: con.rating }).map((_, j) => <Star key={j} className="w-3 h-3 fill-[#edbf46] text-[#edbf46]" />)}
-                      <span className="text-white/40 text-xs ml-1">Your rating</span>
-                    </div>
-                  )}
                 </div>
                 {con.status === "scheduled" && con.meeting_url && (
                   <a href={con.meeting_url} target="_blank" className="flex items-center gap-1.5 bg-[#2a88b8]/20 hover:bg-[#2a88b8]/30 text-[#5aadd4] text-xs font-semibold px-3 py-2 rounded-xl transition-all whitespace-nowrap">
