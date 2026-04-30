@@ -197,12 +197,7 @@ function Navbar() {
               {item}
             </a>
           ))}
-          <a
-            href="#pricing"
-            className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-200"
-          >
-            Pricing
-          </a>
+
         </div>
 
         {/* CTA */}
@@ -330,32 +325,6 @@ function HeroSection() {
             </a>
           </motion.div>
 
-          {/* Social proof */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="mt-10 flex items-center gap-4"
-          >
-            <div className="flex -space-x-2">
-              {["AK", "RP", "SJ", "MV"].map((initials) => (
-                <div
-                  key={initials}
-                  className="w-9 h-9 rounded-full bg-gradient-to-br from-[#3d8838] to-[#1e6b1a] border-2 border-[#0f1e0d] flex items-center justify-center"
-                >
-                  <span className="text-xs font-bold text-white">{initials}</span>
-                </div>
-              ))}
-            </div>
-            <div>
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-[#edbf46] text-[#edbf46]" />
-                ))}
-              </div>
-              <p className="text-xs text-white/50 mt-0.5">Trusted by 200+ Lithuanian farmers</p>
-            </div>
-          </motion.div>
         </div>
 
         {/* Right: Dashboard Preview Card */}

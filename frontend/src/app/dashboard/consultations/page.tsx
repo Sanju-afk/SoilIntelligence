@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageSquare, Video, Phone, Mail, Calendar, Clock, CheckCircle2, Plus, Star } from "lucide-react";
+import { MessageSquare, Video, Phone, Mail, Calendar, Clock, CheckCircle2, Plus } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const CONSULTATIONS = [
