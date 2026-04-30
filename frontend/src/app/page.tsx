@@ -119,39 +119,6 @@ const HOW_IT_WORKS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    name: "Andrius Kazlauskas",
-    role: "Cereal Farmer, Kaunas District",
-    farm_size: "42 ha",
-    quote:
-      "I reduced my nitrogen spend by €4,200 last season by following the Soil Intelligence recommendations. The report paid for itself 28 times over.",
-    rating: 5,
-    avatar: "AK",
-    crop: "Winter Wheat & Rapeseed",
-  },
-  {
-    name: "Rūta Petrauskienė",
-    role: "Organic Farm Operator, Panevėžys",
-    farm_size: "18 ha",
-    quote:
-      "The EU compliance documentation was exactly what I needed for my organic certification renewal. My agronomist was impressed by the detail.",
-    rating: 5,
-    avatar: "RP",
-    crop: "Organic Vegetables & Herbs",
-  },
-  {
-    name: "Saulius Jankūnas",
-    role: "Arable Farmer, Šiauliai",
-    farm_size: "67 ha",
-    quote:
-      "We had been over-applying potassium for years without knowing. The heatmap showed us exactly where the imbalances were across the field.",
-    rating: 5,
-    avatar: "SJ",
-    crop: "Barley & Sugar Beet",
-  },
-];
-
 const FAQS = [
   {
     q: "Do I need to be at the farm when the technician arrives?",
@@ -682,60 +649,6 @@ function PricingSection() {
   );
 }
 
-function TestimonialsSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-
-  return (
-    <section ref={ref} className="py-28 bg-[#070e07]">
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-center mb-16"
-        >
-          <span className="text-[#6fab69] text-sm font-semibold uppercase tracking-widest">
-            Farmer Stories
-          </span>
-          <h2 className="font-display text-4xl font-bold text-white mt-3">
-            Real farms. Real results.
-          </h2>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.12 }}
-              className="bg-[#0d1a0c]/60 border border-[#1a2e18] hover:border-[#3d8838]/40 rounded-3xl p-7 transition-all duration-300"
-            >
-              <div className="flex gap-1 mb-5">
-                {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-[#edbf46] text-[#edbf46]" />
-                ))}
-              </div>
-              <blockquote className="text-white/80 text-sm leading-relaxed mb-6 italic">
-                "{t.quote}"
-              </blockquote>
-              <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#3d8838] to-[#1a6b16] flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-bold text-white">{t.avatar}</span>
-                </div>
-                <div>
-                  <p className="text-white font-medium text-sm">{t.name}</p>
-                  <p className="text-white/40 text-xs">{t.role} · {t.farm_size}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
   const ref = useRef(null);
@@ -912,7 +825,6 @@ export default function LandingPage() {
       <StatsSection />
       <HowItWorksSection />
       <PricingSection />
-      <TestimonialsSection />
       <FAQSection />
       <CTASection />
       <Footer />
