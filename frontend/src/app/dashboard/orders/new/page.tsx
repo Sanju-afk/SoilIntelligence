@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
-  MapPin, Package, Calendar, CreditCard, CheckCircle2,
+  MapPin, Package, Calendar, CheckCircle2,
   ArrowRight, ArrowLeft, Leaf, FlaskConical, Clock,
   Info, ChevronDown, Euro
 } from "lucide-react";
@@ -71,7 +71,7 @@ const MOCK_FARMS = [
   { id: "farm-3", name: "South Meadow",              area_ha: 1.1, district: "Kaunas", crop: "Barley"       },
 ];
 
-const STEPS = ["Package", "Farm", "Schedule", "Review & Pay"];
+const STEPS = ["Package", "Farm", "Schedule"];
 
 // ─── Components ──────────────────────────
 
@@ -315,110 +315,24 @@ export default function NewOrderPage() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            )}
 
-            {/* ── STEP 3: Review & Pay ── */}
-            {step === 3 && (
-              <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                <h2 className="text-white font-semibold text-lg mb-5">Review your order</h2>
-                <div className="grid md:grid-cols-5 gap-6">
-                  {/* Order Summary */}
-                  <div className="md:col-span-3 space-y-4">
-                    <div className="bg-[#0d1a0c]/80 border border-[#1a2e18] rounded-2xl p-5 space-y-4">
-                      <div className="flex items-start gap-3 pb-4 border-b border-[#1a2e18]">
-                        <div className="w-10 h-10 rounded-xl bg-[#1e6b1a]/20 flex items-center justify-center flex-shrink-0">
-                          <Package className="w-4 h-4 text-[#6fab69]" />
-                        </div>
-                        <div>
-                          <p className="text-white font-medium">{pkg?.name} Package — {pkg?.area}</p>
-                          <p className="text-white/40 text-sm">{pkg?.sampling_points} sampling points · {pkg?.turnaround}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3 pb-4 border-b border-[#1a2e18]">
-                        <div className="w-10 h-10 rounded-xl bg-[#1a3d6b]/20 flex items-center justify-center flex-shrink-0">
-                          <MapPin className="w-4 h-4 text-[#5aadd4]" />
-                        </div>
-                        <div>
-                          <p className="text-white font-medium">{farm?.name}</p>
-                          <p className="text-white/40 text-sm">{farm?.district} · {farm?.area_ha} ha</p>
-                        </div>
-                      </div>
-                      {preferredDate && (
-                        <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-[#3d1a6b]/20 flex items-center justify-center flex-shrink-0">
-                            <Calendar className="w-4 h-4 text-purple-400" />
-                          </div>
-                          <div>
-                            <p className="text-white font-medium">Preferred: {preferredDate}</p>
-                            <p className="text-white/40 text-sm">Final date confirmed by SMS</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Payment Method */}
-                    <div className="bg-[#0d1a0c]/80 border border-[#1a2e18] rounded-2xl p-5">
-                      <h3 className="text-white font-medium mb-4 flex items-center gap-2">
-                        <CreditCard className="w-4 h-4 text-white/40" /> Payment Method
-                      </h3>
-                      <div className="space-y-2">
-                        {[
-                          { id: "card", label: "Credit / Debit Card", sub: "Visa, Mastercard — powered by Stripe" },
-                          { id: "banklink", label: "Lithuanian Bank Link", sub: "SEB, Luminor, Swedbank" },
-                          { id: "invoice", label: "Invoice (Net 14)", sub: "For registered businesses only" },
-                        ].map((method) => (
-                          <div key={method.id} className="flex items-center gap-3 p-3 rounded-xl border border-[#1a2e18] hover:border-[#3d8838]/30 cursor-pointer transition-all group">
-                            <div className="w-4 h-4 rounded-full border-2 border-[#3d8838] flex items-center justify-center">
-                              {method.id === "card" && <div className="w-2 h-2 rounded-full bg-[#3d8838]" />}
-                            </div>
-                            <div>
-                              <p className="text-white text-sm font-medium">{method.label}</p>
-                              <p className="text-white/30 text-xs">{method.sub}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Price Breakdown */}
-                  <div className="md:col-span-2">
-                    <div className="bg-[#0d1a0c]/80 border border-[#1a2e18] rounded-2xl p-5 sticky top-6">
-                      <h3 className="text-white font-semibold mb-4">Price Summary</h3>
-                      <div className="space-y-2.5 text-sm mb-4 pb-4 border-b border-[#1a2e18]">
-                        <div className="flex justify-between">
-                          <span className="text-white/60">Service fee</span>
-                          <span className="text-white">€{pkg?.price.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-white/60">VAT (21%)</span>
-                          <span className="text-white">€{pkg?.vat.toFixed(2)}</span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between font-bold text-lg mb-5">
-                        <span className="text-white">Total</span>
-                        <span className="text-[#6fab69]">€{((pkg?.price || 0) + (pkg?.vat || 0)).toFixed(2)}</span>
-                      </div>
-                      <button
-                        onClick={handlePlaceOrder}
-                        disabled={placing}
-                        className="w-full flex items-center justify-center gap-2 py-4 bg-[#1e6b1a] hover:bg-[#26881f] disabled:opacity-60 text-white font-bold rounded-xl transition-all shadow-lg shadow-[#1e6b1a]/20 text-sm"
-                      >
-                        {placing ? (
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        ) : (
-                          <><Euro className="w-4 h-4" /> Confirm & Pay</>
-                        )}
-                      </button>
-                      <p className="text-white/30 text-[10px] text-center mt-3">
-                        Secured by Stripe · 256-bit SSL encryption
-                      </p>
-                    </div>
-                  </div>
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <p className="text-sm text-white/50">Confirm your preferred visit date and place the order.</p>
+                  <button
+                    onClick={handlePlaceOrder}
+                    disabled={!preferredDate || placing}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-5 bg-[#1e6b1a] hover:bg-[#26881f] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all shadow-lg shadow-[#1e6b1a]/20 text-sm"
+                  >
+                    {placing ? (
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <><Euro className="w-4 h-4" /> Confirm Order</>
+                    )}
+                  </button>
                 </div>
               </motion.div>
             )}
+
           </AnimatePresence>
 
           {/* Navigation Buttons */}
