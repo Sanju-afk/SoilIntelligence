@@ -32,7 +32,6 @@ const PRICING_PLANS = [
       "Email delivery",
     ],
     cta: "Order Starter",
-    popular: false,
   },
   {
     id: "standard",
@@ -54,7 +53,6 @@ const PRICING_PLANS = [
       "Field sampling heatmap",
     ],
     cta: "Order Standard",
-    popular: false,
   },
   {
     id: "professional",
@@ -77,7 +75,6 @@ const PRICING_PLANS = [
       "Priority field scheduling",
     ],
     cta: "Order Professional",
-    popular: false,
   },
 ];
 
@@ -551,17 +548,8 @@ function PricingSection() {
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 + i * 0.12 }}
-              className={`relative rounded-3xl p-8 border transition-all duration-300 hover:scale-[1.02] ${
-                plan.popular
-                  ? "bg-gradient-to-br from-[#1e6b1a]/40 to-[#0d2a1a] border-[#3d8838]/60 shadow-2xl shadow-[#3d8838]/20"
-                  : "bg-[#0d1a0c]/60 border-[#1a2e18] hover:border-[#3d8838]/40"
-              }`}
+              className="relative rounded-3xl p-8 border transition-all duration-300 hover:scale-[1.02] bg-[#0d1a0c]/60 border-[#1a2e18] hover:border-[#3d8838]/40"
             >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#3d8838] to-[#2a88b8] text-white text-xs font-bold px-5 py-1.5 rounded-full shadow-lg">
-                  MOST POPULAR
-                </div>
-              )}
 
               <div className="mb-6">
                 <h3 className="text-white font-bold text-xl mb-1">{plan.name}</h3>
@@ -593,11 +581,7 @@ function PricingSection() {
 
               <Link
                 href="/auth/register"
-                className={`block text-center font-semibold py-3.5 rounded-xl transition-all duration-200 ${
-                  plan.popular
-                    ? "bg-[#1e6b1a] hover:bg-[#26881f] text-white shadow-lg shadow-[#1e6b1a]/30"
-                    : "bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20"
-                }`}
+                className="block text-center font-semibold py-3.5 rounded-xl transition-all duration-200 bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20"
               >
                 {plan.cta}
               </Link>
