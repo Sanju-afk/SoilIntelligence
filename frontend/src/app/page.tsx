@@ -54,7 +54,7 @@ const PRICING_PLANS = [
       "Field sampling heatmap",
     ],
     cta: "Order Standard",
-    popular: true,
+    popular: false,
   },
   {
     id: "professional",
