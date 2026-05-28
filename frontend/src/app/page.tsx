@@ -343,100 +343,196 @@ function HeroSection() {
     </section>
   );
 }
-
 function DashboardPreviewCard() {
   return (
     <div className="relative">
-      {/* Glow behind card */}
-      <div className="absolute inset-0 -m-8 bg-[#1e6b1a]/20 blur-3xl rounded-full" />
+      {/* Ambient glow */}
+      <div className="absolute inset-0 -m-10 bg-[#1e6b1a]/20 blur-3xl rounded-full" />
 
-      <div className="relative bg-[#0f1e0d]/80 backdrop-blur-xl border border-[#3d8838]/30 rounded-3xl p-6 shadow-2xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <p className="text-white/40 text-xs font-medium uppercase tracking-wider">
-              Soil Intelligence Report
-            </p>
-            <p className="text-white font-semibold mt-0.5">Farm: Kazlauskas Nord Field</p>
-          </div>
-          <div className="bg-[#1e6b1a]/40 border border-[#3d8838]/40 rounded-xl px-3 py-1.5">
-            <span className="text-[#6fab69] text-xs font-bold">● LIVE</span>
-          </div>
-        </div>
+      <div className="relative bg-[#0f1e0d]/85 backdrop-blur-2xl border border-[#3d8838]/30 rounded-3xl overflow-hidden shadow-2xl">
 
-        {/* Score */}
-        <div className="flex items-center gap-6 mb-6">
-          <div className="relative w-24 h-24">
-            <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="#1a2e18" strokeWidth="8" />
-              <circle
-                cx="50" cy="50" r="40" fill="none" stroke="#3d8838" strokeWidth="8"
-                strokeDasharray="251.2" strokeDashoffset="50"
-                strokeLinecap="round"
-                style={{ filter: "drop-shadow(0 0 8px rgba(61,136,56,0.6))" }}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold text-white">82</span>
-              <span className="text-[10px] text-white/40">/ 100</span>
-            </div>
+        {/* Top Banner */}
+        <div className="relative h-40 bg-gradient-to-br from-[#16351a] via-[#1e6b1a] to-[#0d1f10] overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div
+              className="w-full h-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+                backgroundSize: "40px 40px",
+              }}
+            />
           </div>
-          <div>
-            <div className="text-[#6fab69] text-3xl font-display font-bold">Grade A</div>
-            <p className="text-white/50 text-sm mt-1">Soil Health Score</p>
-            <div className="flex items-center gap-1 mt-2">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#6fab69]" />
-              <span className="text-xs text-[#6fab69] font-medium">EU Compliant</span>
-            </div>
-          </div>
-        </div>
 
-        {/* NPK Bars */}
-        {[
-          { label: "Nitrogen (N)", value: 78, unit: "mg/kg", color: "#3d8838" },
-          { label: "Phosphorus (P)", value: 52, unit: "mg/kg", color: "#2a88b8" },
-          { label: "Potassium (K)", value: 91, unit: "mg/kg", color: "#b87d12" },
-          { label: "pH Level", value: 68, unit: "6.8", color: "#7a3d8a" },
-        ].map((item) => (
-          <div key={item.label} className="mb-3">
-            <div className="flex justify-between items-center mb-1">
-              <span className="text-xs text-white/60">{item.label}</span>
-              <span className="text-xs font-mono text-white/80">{item.unit}</span>
-            </div>
-            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${item.value}%` }}
-                transition={{ delay: 0.8 + Math.random() * 0.3, duration: 0.8 }}
-                className="h-full rounded-full"
-                style={{ backgroundColor: item.color }}
-              />
-            </div>
-          </div>
-        ))}
-
-        {/* Recommendations */}
-        <div className="mt-5 pt-5 border-t border-white/10">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-3">Top Recommendation</p>
-          <div className="bg-[#b87d12]/15 border border-[#b87d12]/30 rounded-xl p-3">
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-lg bg-[#b87d12]/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-[10px]">⚠️</span>
-              </div>
+          <div className="relative z-10 p-6 flex flex-col justify-between h-full">
+            <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-semibold text-[#edbf46]">Nitrogen Deficit — 22%</p>
-                <p className="text-xs text-white/50 mt-0.5">
-                  Apply Urea (46-0-0) at 142 kg/ha before March tillage
+                <p className="text-white/40 text-xs uppercase tracking-[0.2em]">
+                  AI Soil Intelligence
+                </p>
+                <h3 className="text-white text-2xl font-bold mt-2">
+                  Field Analysis Preview
+                </h3>
+              </div>
+
+              <div className="bg-white/10 border border-white/10 rounded-xl px-3 py-1.5">
+                <span className="text-[#8fd98b] text-xs font-bold">
+                  ● DEMO PREVIEW
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <div>
+                <p className="text-white/40 text-xs">Predicted Yield Improvement</p>
+                <p className="text-white text-3xl font-bold mt-1">+18%</p>
+              </div>
+
+              <div className="w-px h-10 bg-white/10" />
+
+              <div>
+                <p className="text-white/40 text-xs">Estimated Fertiliser Savings</p>
+                <p className="text-white text-3xl font-bold mt-1">€1.2k</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+
+          {/* Insight Cards */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
+
+            <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-white/50 text-xs uppercase tracking-wider">
+                  Soil Quality
+                </span>
+                <div className="w-2 h-2 rounded-full bg-[#6fab69]" />
+              </div>
+
+              <div className="text-4xl font-bold text-white mb-1">
+                A+
+              </div>
+
+              <p className="text-white/40 text-sm">
+                Healthy nutrient balance detected
+              </p>
+            </div>
+
+            <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-white/50 text-xs uppercase tracking-wider">
+                  Compliance
+                </span>
+                <div className="w-2 h-2 rounded-full bg-[#3db87d]" />
+              </div>
+
+              <div className="text-2xl font-bold text-white mb-2">
+                EU Ready
+              </div>
+
+              <p className="text-white/40 text-sm">
+                Monitoring thresholds within limits
+              </p>
+            </div>
+          </div>
+
+          {/* AI Summary */}
+          <div className="bg-gradient-to-r from-[#1e6b1a]/20 to-[#0f1e0d] border border-[#3d8838]/20 rounded-2xl p-5 mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[#1e6b1a]/40 flex items-center justify-center">
+                🤖
+              </div>
+
+              <div>
+                <p className="text-white text-sm font-semibold">
+                  AI Summary
+                </p>
+                <p className="text-white/40 text-xs">
+                  Generated from sample analysis data
                 </p>
               </div>
             </div>
+
+            <p className="text-white/70 text-sm leading-relaxed">
+              This field demonstrates strong potassium availability and stable
+              pH conditions. Minor nitrogen optimisation could improve crop
+              consistency and reduce fertiliser overuse during the next planting cycle.
+            </p>
           </div>
+
+          {/* Progress Bars */}
+          <div className="space-y-4">
+
+            {[
+              {
+                label: "Nitrogen Efficiency",
+                value: 72,
+                color: "#6fab69",
+              },
+              {
+                label: "Water Retention",
+                value: 81,
+                color: "#3d88b8",
+              },
+              {
+                label: "Organic Activity",
+                value: 64,
+                color: "#b87d12",
+              },
+            ].map((item) => (
+              <div key={item.label}>
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="text-white/60 text-sm">
+                    {item.label}
+                  </span>
+
+                  <span className="text-white/40 text-xs">
+                    {item.value}%
+                  </span>
+                </div>
+
+                <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${item.value}%` }}
+                    transition={{ duration: 1 }}
+                    className="h-full rounded-full"
+                    style={{
+                      backgroundColor: item.color,
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer Note */}
+          <div className="mt-6 pt-5 border-t border-white/5 flex items-center justify-between">
+            <div>
+              <p className="text-white/50 text-xs uppercase tracking-wider">
+                Prototype Dashboard
+              </p>
+
+              <p className="text-white/30 text-xs mt-1">
+                Visualisation for product demonstration purposes
+              </p>
+            </div>
+
+            <div className="px-3 py-1 rounded-lg bg-[#1e6b1a]/20 border border-[#3d8838]/20">
+              <span className="text-[#8fd98b] text-xs font-medium">
+                Sample Insights
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   );
 }
-
 function StatsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
